@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DouPHP 管理中心 - 添加分类 </title>
+<title>DouPHP 管理中心 - 添加品牌 </title>
 <meta name="Copyright" content="Douco Design." />
 <link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
@@ -18,25 +18,14 @@
  <!-- dcLeft 结束 -->
  <div id="dcMain">
    <!-- 当前位置 -->
-<div id="urHere">DouPHP 管理中心<b>></b><strong>添加分类</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
-            <h3><a href="{:url('')}" class="actionBtn">商品分类</a>添加分类</h3>
+<div id="urHere">DouPHP 管理中心<b>></b><strong>添加品牌</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+            <h3><a href="{:url('')}" class="actionBtn">商品分类</a>添加品牌</h3>
     <form action="" method="post">
      <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
       <tr>
-       <td width="80" align="right">分类名称</td>
+       <td width="80" align="right">品牌名称</td>
        <td>
         <input type="text" name="cate_name" value="" size="40" class="inpMain" />
-       </td>
-      </tr>
-      <tr>
-       <td align="right">所属分类</td>
-       <td>
-        <select name="cate_pid" id="">
-         <option value="0">顶级分类</option>
-         {foreach $cates as $key=>$vo }
-         <option value="{$vo.cate_id}">{$vo.level|str_repeat="---",###}{$vo.cate_name}</option>
-         {/foreach}
-        </select>
        </td>
       </tr>
       <tr>

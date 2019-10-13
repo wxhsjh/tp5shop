@@ -1,0 +1,62 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DouPHP 管理中心 - 商品分类 </title>
+<meta name="Copyright" content="Douco Design." />
+<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/global.js"></script>
+</head>
+<body>
+<div id="dcWrap">
+    <!-- dcHead 开始 -->
+    {include file="public/header" /}
+    <!-- dcHead 结束 -->
+    <!-- dcLeft 开始 -->
+    {include file="public/left" /}
+    <!-- dcLeft 结束 -->
+ <div id="dcMain">
+   <!-- 当前位置 -->
+<div id="urHere">DouPHP 管理中心<b>></b><strong>商品分类</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+        <h3><a href="{:url('add')}" class="actionBtn add">添加分类</a>商品分类</h3>
+    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+      <tr>
+        <th width="120" align="left">分类名称</th>
+        <th width="120" align="center">分类状态</th>
+        <th width="120" align="center">分类导航状态</th>
+        <th width="120" align="left">分类关键字</th>
+        <th align="left">简单描述</th>
+        <th width="60" align="center">排序</th>
+        <th width="80" align="center">操作</th>
+      </tr>
+        {foreach $cates as $key=>$vo }
+        <tr>
+        <td align="left">{$vo.cate_name}</td>
+        <td align="center">
+            {if $vo.cate_status == 1}显示
+            {else}不显示
+            {/if}
+        </td>
+        <td align="center">
+            {if $vo.cate_nav == 1}导航
+            {else}不导航
+            {/if}
+        </td>
+        <td align="left">{$vo.cate_keywords}</td>
+        <td align="left">{$vo.cate_des}</td>
+        <td align="center">{$vo.cate_order}</td>
+        <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.cate_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.cate_id}">删除</a></td>
+     </tr>
+        {/foreach}
+          </table>
+           </div>
+ </div>
+ <div class="clear"></div>
+    <!-- dcFooter 开始 -->
+    {include file="public/footer" /}
+    <!-- dcFooter 结束 -->
+<div class="clear"></div> </div>
+</body>
+</html>

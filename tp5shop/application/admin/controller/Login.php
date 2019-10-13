@@ -41,10 +41,7 @@ class Login extends Controller
                 $this->error('用户名或密码不符合规定');
             }
             //数据库查询
-            $sult = Db::table("shop_admin")->field("admin_sult")->where("admin_name",$admin_name)->find();
-            $admin_sult=implode($sult);
-            $admin_pwd=md5(md5($admin_pwd).$admin_sult);
-            $admin = Db::table("shop_admin")->field("admin_id,admin_name")->where('admin_name',$admin_name)->where('admin_pwd',$admin_pwd)->find();
+            $admin=\app\admin\model\Login::login($admin_name,$admin_pwd);
             if($admin){
                 if ($save) {
                     Cookie::set("admin",$admin,7*24*3600,"/admin");
@@ -59,6 +56,7 @@ class Login extends Controller
     public function loginout()
     {
         Session::delete('admin');
+        Cookie::delete('admin');
         $this->success("退出成功","login");
     }
 }
