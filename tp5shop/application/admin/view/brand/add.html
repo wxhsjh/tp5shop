@@ -8,6 +8,31 @@
 <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/admin/js/global.js"></script>
 </head>
+<script>
+ $(function(){
+        $("#sub").click(function(){
+            //将form表单变成一个formdata对象，通过Ajax发过去
+            var formData=new FormData($("form[name='brand']").get(0));
+            $.ajax({
+                type:"post",
+                url:"{:url('index')}",
+                data:formData,
+                processData: false,
+                contentType: false,
+                dataType:"json",
+                success:function(data){
+                    if(data.status==1){
+                      alert("添加成功");
+                    }
+                    else {
+                        alert("添加失败");
+                    }
+                }
+            })
+        });
+
+ })
+</script>
 <body>
 <div id="dcWrap">
  <!-- dcHead 开始 -->
@@ -19,39 +44,45 @@
  <div id="dcMain">
    <!-- 当前位置 -->
 <div id="urHere">DouPHP 管理中心<b>></b><strong>添加品牌</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
-            <h3><a href="{:url('')}" class="actionBtn">商品分类</a>添加品牌</h3>
-    <form action="" method="post">
+            <h3><a href="{:url('index')}" class="actionBtn">商品品牌</a>添加品牌</h3>
+    <form action="" name="brand">
      <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
       <tr>
        <td width="80" align="right">品牌名称</td>
        <td>
-        <input type="text" name="cate_name" value="" size="40" class="inpMain" />
+        <input type="text" name="brand_name" value="" size="40" class="inpMain" />
        </td>
       </tr>
       <tr>
-       <td align="right">关键字</td>
+       <td align="right">品牌网址</td>
        <td>
-        <input type="text" name="cate_keywords" value="" size="40" class="inpMain" />
+        <input type="text" name="brand_url" value="" size="40" class="inpMain" />
        </td>
       </tr>
       <tr>
        <td align="right">简单描述</td>
        <td>
-        <textarea name="cate_des" cols="60" rows="4" class="textArea"></textarea>
+        <textarea name="brand_des" cols="60" rows="4" class="textArea"></textarea>
        </td>
       </tr>
       <tr>
        <td align="right">排序</td>
        <td>
-        <input type="text" name="cate_order" value="50" size="5" class="inpMain" />
+        <input type="text" name="brand_order" size="5" class="inpMain" />
        </td>
       </tr>
       <tr>
-       <td></td>
+       <td align="center" style="width:120px">品牌logo</td>
        <td>
-        <input type="hidden" name="cate_id" value="" />
-        <input class="btn" type="submit" value="提交" />
+        <input type="file" name="brand_img" class="inpMain" />
        </td>
+      </tr>
+      <tr>
+       <td>
+        <input type="hidden" name="brand_id" value="" />
+        <input class="btn" id="sub" type="button" value="提交" />
+       </td>
+       <td></td>
       </tr>
      </table>
     </form>

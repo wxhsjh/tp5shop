@@ -11,6 +11,7 @@ use think\Db;
 use think\Model;
 
 class Catemodel extends Model{
+    protected $pk ="cate_id";
     //取所有得分类
     public function getCates(){
         $cates=Db::table("shop_cate")->select();

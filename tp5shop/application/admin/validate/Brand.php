@@ -8,19 +8,17 @@
 namespace app\admin\validate;
 use think\Validate;
 
-class Cate extends Validate{
+class Brand extends Validate{
     protected $rule = [
-        'cate_name' => 'require',
-        'cate_name' => 'unique:cate',
-        'cate_order' => 'require',
-        'cate_pid' => 'require'
+        'brand_name' => 'require',
+        'brand_name' => 'unique:brand',
+        'brand_order' => 'require'
     ];
 
 
     protected $message = [
-        'cate_name.require' => "分类名称不能为空",
-        'cate_name.unique' => "分类名称不能重复",
-        'cate_order.require' => "分类序号不能为空",
-        'cate_pid.require' => "所属分类不能为空"
+        'brand_name.require' => "品牌名称不能为空",
+        'brand_name.unique' => "品牌名称不能重复",
+        'brand_order.require' => "品牌序号不能为空"
     ];
 }
