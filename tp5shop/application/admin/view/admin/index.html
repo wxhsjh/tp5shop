@@ -1,0 +1,49 @@
+{extend name="public/base" /}
+{block name="title"}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DouPHP 管理中心 - 角色添加 </title>
+<meta name="Copyright" content="Douco Design." />
+<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/global.js"></script>
+{/block}
+
+{block name="body"}
+<div id="dcMain">
+    <!-- 当前位置 -->
+    <div id="urHere">DouPHP 管理中心<b>></b><strong>管理员列表</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+    <h3><a href="{:url('add')}" class="actionBtn add">添加管理员</a>管理员列表</h3>
+    <div id="list">
+        <form name="action" method="post" >
+            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+                <tr>
+                    <td>管理员名称</td>
+                    <td>管理员状态</td>
+                    <td>管理员ip</td>
+                    <td>最后登录的时间</td>
+                    <td>管理员权限</td>
+                    <td>操作</td>
+                </tr>
+                {volist name="admins" id="vo" }
+                <tr>
+                    <td>{$vo.admin_name}</td>
+                    <td>
+                        {if $vo.admin_status==1}正常
+                        {else}封号
+                        {/if}
+                    </td>
+                    <td>{$vo.admin_ip}</td>
+                    <td>{$vo.admin_lastlogin_time|date="Y-m-d H:i:s"}</td>
+                    <td>{$vo.admin_action_list}</td>
+                    <td><a href="product_category.php?rec=edit&cat_id={$vo.admin_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.admin_id}">删除</a></td>
+                </tr>
+                {/volist}
+            </table>
+        </form>
+    </div>
+    <div class="clear"></div>
+    <div class="pager">总计 10 个记录，共 1 页，当前第 1 页 | <a href="article.php?page=1">第一页</a> 上一页 下一页 <a href="article.php?page=1">最末页</a></div>           </div>
+</div>
+<div class="clear"></div>
+{/block}
+

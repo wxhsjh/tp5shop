@@ -1,0 +1,67 @@
+{extend name="public/base" /}
+
+{block name="title"}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DouPHP 管理中心 - 权限管理 </title>
+<meta name="Copyright" content="Douco Design." />
+<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/global.js"></script>
+{/block}
+
+{block name="body"}
+ <div id="dcMain">
+   <!-- 当前位置 -->
+<div id="urHere">DouPHP 权限管理<b>></b><strong>权限添加</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+            <h3><a href="{:url('index')}" class="actionBtn">权限列表</a>权限添加</h3>
+    <form action="" method="post">
+     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+      <tr>
+       <td width="80" align="right">权限名称</td>
+       <td>
+        <input type="text" name="power_name" value="" size="40" class="inpMain" />
+       </td>
+      </tr>
+      <tr>
+       <td align="right">所属权限</td>
+       <td>
+        <select name="power_pid" id="">
+         <option value="0">顶级权限</option>
+         {foreach $powers as $key=>$vo }
+         <option value="{$vo.power_id}">{$vo.level|str_repeat="---",###}{$vo.power_name}</option>
+         {/foreach}
+        </select>
+       </td>
+      </tr>
+      <tr>
+       <td align="right">是否显示左侧</td>
+       <td>
+        <input type="radio" name="power_ismu" checked value="1" />显示
+        <input type="radio" name="power_ismu" value="0" />不显示
+       </td>
+      </tr>
+      <tr>
+       <td align="right">权限控制器</td>
+       <td>
+        <input type="text" name="power_controller" value="" size="40" class="inpMain" />
+       </td>
+      </tr>
+      <tr>
+       <td align="right">权限方法</td>
+       <td>
+        <input type="text" name="power_action" value="" size="40" class="inpMain" />
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <input type="hidden" name="power_id" value="" />
+        <input class="btn" type="submit" value="提交" />
+       </td>
+       <td></td>
+      </tr>
+     </table>
+    </form>
+       </div>
+ </div>
+ <div class="clear"></div>
+{/block}

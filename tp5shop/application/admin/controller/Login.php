@@ -28,13 +28,15 @@ class Login extends Controller
             $admin_name = Request::post('admin_name');
             $admin_pwd = Request::post('admin_pwd');
             $save=Request::post('save')?1:0;
+            $time=time();
+            $admin_ip=$_SERVER["SERVER_ADDR"];
             //验证值
             $data = [
                 'admin_name'  => $admin_name,
                 'admin_pwd'  => $admin_pwd
             ];
             $validate = Validate::make([
-                'admin_name'  => 'require|length:5,15',
+                'admin_name'  => 'require|length:2,15',
                 'admin_pwd'  => 'require'
             ]);
             if (!$validate->check($data)) {
@@ -43,6 +45,7 @@ class Login extends Controller
             //数据库查询
             $admin=\app\admin\model\Login::login($admin_name,$admin_pwd);
             if($admin){
+                Db::table("shop_admin")->where("admin_name",$admin_name)->update(["admin_lastlogin_time"=>$time,"admin_ip"=>$admin_ip]);
                 if ($save) {
                     Cookie::set("admin",$admin,7*24*3600,"/admin");
                 }

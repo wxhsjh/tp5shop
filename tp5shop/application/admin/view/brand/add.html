@@ -15,7 +15,7 @@
             var formData=new FormData($("form[name='brand']").get(0));
             $.ajax({
                 type:"post",
-                url:"{:url('index')}",
+                url:"{:url('add')}",
                 data:formData,
                 processData: false,
                 contentType: false,
