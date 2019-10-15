@@ -15,14 +15,14 @@
             var formData=new FormData($("form[name='brand']").get(0));
             $.ajax({
                 type:"post",
-                url:"{:url('add')}",
+                url:"",
                 data:formData,
                 processData: false,
                 contentType: false,
                 dataType:"json",
                 success:function(data){
                     if(data.status==1){
-                      alert("添加成功");
+                        location.href="index";
                     }
                     else {
                         alert("添加失败");
@@ -79,7 +79,6 @@
       </tr>
       <tr>
        <td>
-        <input type="hidden" name="brand_id" value="" />
         <input class="btn" id="sub" type="button" value="提交" />
        </td>
        <td></td>

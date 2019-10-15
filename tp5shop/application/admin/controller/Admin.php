@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 namespace app\admin\controller;
+use app\admin\service\AdminService;
 use think\Controller;
 use think\Db;
 use think\facade\Request;
@@ -13,14 +14,17 @@ class Admin extends Common
 {
     public function index()
     {
-        $admins=\app\admin\model\Admin::getAdmins();
+        $admins=new AdminService();
+        $admins=$admins->getAdmins();
         return view('',["admins"=>$admins]);
     }
     public function add()
     {
         if( Request::isGet()){
-            $admins=\app\admin\model\Admin::getAdmins();
-            $roles=\app\admin\model\Admin::getroles();
+            $admins=new AdminService();
+            $admins=$admins->getAdmins();
+            $roles=new AdminService();
+            $roles=$roles->getroles();
             return view('',["admins"=>$admins,"roles"=>$roles]);
         }elseif(Request::isPost()){
             //接值
@@ -49,7 +53,8 @@ class Admin extends Common
             $data["admin_sult"]=$admin_sult;
             $data["admin_action_list"]=$admin_role;
             //入库
-            $admin=\app\admin\model\Admin::addAdmin($data);
+            $admins=new AdminService();
+            $admin=$admins->addAdmin($data);
             $admin_id=Db::table("shop_admin")->where("admin_name",$data["admin_name"])->find();
             foreach($admin_action_list as $key=>$val){
                 $role_id=Db::table("shop_role")->where("role_name",$val)->find();
