@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 namespace app\admin\controller;
 use app\admin\model\Powermodel;
+use app\admin\service\PowerService;
 use think\Controller;
 use think\Db;
 use think\facade\Request;
@@ -15,16 +16,16 @@ class Power extends Common
 
     public function index()
     {
-        $powermodel=new Powermodel();
-        $powers=$powermodel->getPowers();
+        $powerService=new PowerService();
+        $powers=$powerService->getPowers();
         return view('',["powers"=>$powers]);
     }
 
     public function add()
     {
-        $powermodel=new Powermodel();
+        $powerService=new PowerService();
         if( Request::isGet()){
-            $powers=$powermodel->getPowers();
+            $powers=$powerService->getPowers();
             return view('',["powers"=>$powers]);
         }elseif(Request::isPost()){
             //接值
@@ -41,7 +42,7 @@ class Power extends Common
                 $this->error($validate);
             }
             //入库
-            $power=$powermodel->addPower($data);
+            $power=$powerService->addPower($data);
             if($power){
                 $this->success('添加成功','index');
             }else{

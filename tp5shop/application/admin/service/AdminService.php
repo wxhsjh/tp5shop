@@ -17,7 +17,7 @@ class AdminService{
     }
     public function addAdmin($data){
         $admin= new Admin;
-        $admin->save($data);
+        $admin = $admin->save($data);
         return $admin;
     }
     public function getroles(){

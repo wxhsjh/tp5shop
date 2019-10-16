@@ -10,6 +10,7 @@ use think\Db;
 use think\Model;
 
 class Role extends Model{
+    protected $pk ="role_id";
     public static function addRole($data){
         $role=Db::table("shop_role")->insert($data);
         return $role;
@@ -17,5 +18,8 @@ class Role extends Model{
     public static function getRole(){
         $roles=Db::table("shop_role")->select();
         return $roles;
+    }
+    public function power(){
+        return $this->belongsToMany("Power",'role_power',"power_id","role_id");
     }
 }

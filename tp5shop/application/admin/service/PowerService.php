@@ -2,19 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: me
- * Date: 2019/10/13
- * Time: 11:49
+ * Date: 2019/10/16
+ * Time: 8:44
  */
-namespace app\admin\model;
+namespace app\admin\service;
 
-use think\Db;
-use think\Model;
+use app\admin\model\Power;
 
-class Powermodel extends Model{
-    protected $pk ="power_id";
-    //取所有得分类
+class PowerService{
+//取所有得分类
     public function getPowers(){
-        $powers=Db::table("shop_power")->select();
+        $powers=new Power();
+        $powers = $powers->all();
         return $this->getOrderPower($powers);
     }
     public function getOrderPower($powers,$pid=0,$level=0){
@@ -30,7 +29,8 @@ class Powermodel extends Model{
         return $orderPower;
     }
     public function addPower($data){
-        $power=Db::table("shop_power")->insert($data);
+        $power=new Power();
+        $power=$power->save($data);
         return $power;
     }
 }

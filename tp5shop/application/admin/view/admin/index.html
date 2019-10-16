@@ -21,7 +21,8 @@
                     <td>管理员状态</td>
                     <td>管理员ip</td>
                     <td>最后登录的时间</td>
-                    <td>管理员权限</td>
+                    <td>管理员角色</td>
+                    <td>拥有权限</td>
                     <td>操作</td>
                 </tr>
                 {volist name="admins" id="vo" }
@@ -34,7 +35,18 @@
                     </td>
                     <td>{$vo.admin_ip}</td>
                     <td>{$vo.admin_lastlogin_time|date="Y-m-d H:i:s"}</td>
-                    <td>{$vo.admin_action_list}</td>
+                    <td>
+                        {foreach $vo->role as $k=>$v}
+                        {$v->role_name}
+                        {/foreach}
+                    </td>
+                    <td align="left">
+                        {foreach $vo->role as $k=>$v}
+                        {foreach $v->power as $k1=>$v1}
+                        {$v1->power_name},
+                        {/foreach}
+                        {/foreach}
+                    </td>
                     <td><a href="product_category.php?rec=edit&cat_id={$vo.admin_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.admin_id}">删除</a></td>
                 </tr>
                 {/volist}

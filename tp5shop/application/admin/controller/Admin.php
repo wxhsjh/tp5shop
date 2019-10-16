@@ -29,7 +29,6 @@ class Admin extends Common
         }elseif(Request::isPost()){
             //接值
             $admin_action_list=request()->post("admin_role","");
-            $admin_role=implode(",",$admin_action_list);
             $data["admin_name"] = request()->post("admin_name","");
             $admin_pwd=request()->post("admin_pwd","");
             $admin_repwd=request()->post("admin_repwd","");
@@ -51,15 +50,13 @@ class Admin extends Common
             $admin_sult=substr(uniqid(),-4);
             $data["admin_pwd"]=md5(md5($admin_pwd).$admin_sult);
             $data["admin_sult"]=$admin_sult;
-            $data["admin_action_list"]=$admin_role;
             //入库
             $admins=new AdminService();
             $admin=$admins->addAdmin($data);
             $admin_id=Db::table("shop_admin")->where("admin_name",$data["admin_name"])->find();
             foreach($admin_action_list as $key=>$val){
-                $role_id=Db::table("shop_role")->where("role_name",$val)->find();
                 $shop_admin_role=Db::table("shop_admin_role")
-                    ->insert(["admin_id"=>$admin_id["admin_id"],"role_id"=>$role_id["role_id"]]);
+                    ->insert(["admin_id"=>$admin_id["admin_id"],"role_id"=>$val]);
             }
             if($admin&&$shop_admin_role){
                 $this->success('添加成功','index');
