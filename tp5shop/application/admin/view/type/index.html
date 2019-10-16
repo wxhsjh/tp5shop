@@ -1,0 +1,35 @@
+{extend name="public/base" /}
+{block name="title"}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DouPHP 管理中心 - 类型管理 </title>
+<meta name="Copyright" content="Douco Design." />
+<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/global.js"></script>
+{/block}
+
+{block name="body"}
+ <div id="dcMain">
+   <!-- 当前位置 -->
+<div id="urHere">DouPHP 管理中心<b>></b><strong>类型管理</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+        <h3><a href="{:url('add')}" class="actionBtn add">添加类型</a>类型列表</h3>
+    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+      <tr>
+        <th width="120" align="center">类型id</th>
+        <th width="120" align="center">类型名称</th>
+        <th width="120" align="center">类型组</th>
+        <th width="80" align="center">操作</th>
+      </tr>
+        {foreach $types as $key=>$vo }
+        <tr>
+        <td align="center">{$vo.type_id}</td>
+        <td align="center">{$vo.type_name}</td>
+        <td align="left">{$vo.type_group}</td>
+        <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.type_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.type_id}">删除</a></td>
+     </tr>
+        {/foreach}
+          </table>
+           </div>
+ </div>
+ <div class="clear"></div>
+{/block}

@@ -1,14 +1,18 @@
 <div id="dcLeft">
     <div id="menu">
     <ul class="top">
-        <li><a href="index.html"><i class="home"></i><em>管理首页</em></a></li>
+        <li><a href="{:url('Index/index')}"><i class="home"></i><em>管理首页</em></a></li>
     </ul>
-        <ul>
+        <if>
             {foreach $mu as $key=>$val}
-        <li><a href="{:url('Index/index')}"><i class="system"></i><em>{$val.power_name}</em></a></li>
+            <p hidden>{$url=$val.power_controller."/".$val.power_action}</p>
+        <li><a href="{:url($url)}"><i class="system"></i><em>{$val.power_name}</em></a></li>
+            {if !empty($val['son'])}
         {foreach $val['son'] as $k=>$v}
-        <li><a href="nav.html"><i class="nav"></i><em>----{$v.power_name}</em></a></li>
+            <p hidden>{$url=$v.power_controller."/".$v.power_action}</p>
+        <li><a href="{:url($url)}"><i class="nav"></i><em>----{$v.power_name}</em></a></li>
         {/foreach}
+            {/if}
             {/foreach}
     </ul>
 

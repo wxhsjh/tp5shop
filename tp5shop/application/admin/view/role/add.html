@@ -1,59 +1,92 @@
-{extend name="public/base" /}
-{block name="title"}
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DouPHP 管理中心 - 角色管理 </title>
-<meta name="Copyright" content="Douco Design." />
-<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/admin/js/global.js"></script>
-{/block}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <title>DouPHP 管理中心 - 添加品牌 </title>
+ <meta name="Copyright" content="Douco Design." />
+ <link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+ <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+ <script type="text/javascript" src="/static/admin/js/global.js"></script>
+</head>
+<script language="javascript">
+ $(function(){
+  $('.parent').click(function(){
+   if($(this).prop("checked")==true){
+    $(this).parent().next().children().prop("checked","checked");
+   }else{
+    $(this).parent().next().children().prop("checked",false);
+   }
+  });
+  $('.son').click(function(){
+   if($(this).prop("checked")==true){
+    $(this).parent().prev().children().prop("checked","checked");
+   }else{
+    $(this).parent().prev().children().prop("checked",false);
+   }
 
-{block name="body"}
-<div id="dcMain">
- <!-- 当前位置 -->
- <div id="urHere">DouPHP 管理中心<b>></b><strong>添加角色</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
- <h3><a href="{:url('')}" class="actionBtn">角色列表</a>添加角色</h3>
- <form action="" method="post">
-  <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
-   <tr>
-    <td width="80" align="right">角色名称</td>
-    <td>
-     <input type="text" name="role_name" value="" size="40" class="inpMain" />
-    </td>
-</tr>
-   <tr>
-    <td align="right">权限选择</td>
-    <td>
-     <table>
-      {foreach $powers as $k=>$v}
-      {if $v['power_pid']==0}
-      <tr power_id="{$v['power_id']}">
-       <th>
-        <input type="checkbox" name="power[]" value="{$v['power_name']}">{$v['power_name']}
-       </th>
-       <td>
-        {foreach $powers as $key=>$val}
-        {if $val['power_pid']==$v['power_id']}
-        <input type="checkbox" name="power[]" value="{$val['power_name']}">{$val['power_name']}
-        {/if}
-        {/foreach}
-       </td>
-      </tr>
-      {/if}
-      {/foreach}
-     </table>
-    </td>
-   </tr>
-   <tr>
-    <td>
-     <input type="hidden" name="cate_id" value="" />
-     <input class="btn" type="submit" value="提交" />
-    </td>
-    <td></td>
-   </tr>
-  </table>
- </form>
-</div>
-</div>
-<div class="clear"></div>
-{/block}
+  });
+ })
+</script>
+<body>
+<div id="dcWrap">
+ <!-- dcHead 开始 -->
+ {include file="public/header" /}
+ <!-- dcHead 结束 -->
+ <!-- dcLeft 开始 -->
+ {include file="public/left" /}
+ <!-- dcLeft 结束 -->
+ <div id="dcMain">
+  <!-- 当前位置 -->
+  <div id="urHere">DouPHP 管理中心<b>></b><strong>添加角色</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+  <h3><a href="{:url('')}" class="actionBtn">角色列表</a>添加角色</h3>
+  <form action="" method="post">
+   <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+    <tr>
+     <td width="80" align="right">角色名称</td>
+     <td>
+      <input type="text" name="role_name" value="" size="40" class="inpMain" />
+     </td>
+    </tr>
+    <tr>
+     <td align="right">权限选择</td>
+     <td>
+      <table>
+       {foreach $powers as $k=>$v}
+       {if $v['power_pid']==0}
+       <tr power_id="{$v['power_id']}">
+        <th>
+         <input class="parent" type="checkbox" name="power[]" value="{$v['power_name']}">{$v['power_name']}
+        </th>
+        <td>
+         {foreach $powers as $key=>$val}
+         {if $val['power_pid']==$v['power_id']}
+         <input class="son" type="checkbox" name="power[]" value="{$val['power_name']}">{$val['power_name']}
+         {/if}
+         {/foreach}
+        </td>
+       </tr>
+       {/if}
+       {/foreach}
+      </table>
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <input type="hidden" name="cate_id" value="" />
+      <input class="btn" type="submit" value="提交" />
+     </td>
+     <td></td>
+    </tr>
+   </table>
+  </form>
+ </div>
+ </div>
+ <div class="clear"></div>
+ <!-- dcFooter 开始 -->
+ {include file="public/footer" /}
+ <!-- dcFooter 结束 -->
+ <div class="clear"></div> </div>
+</body>
+</html>
+
+

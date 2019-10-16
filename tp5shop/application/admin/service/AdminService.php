@@ -63,6 +63,10 @@ class AdminService{
                 $mu=array_merge($mu,$val->power->where("power_ismu",1)->toArray());
             }
         }
+        foreach($mu as $key=>$val){
+            $v[]=array_unique($val);
+        }
+        $mu=$v;
         return $mu;
     }
     public function getMuTree($mu,$pid=0){
