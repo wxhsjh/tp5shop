@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 namespace app\admin\controller;
 use app\admin\model\Powermodel;
+use app\admin\service\PowerService;
 use think\Controller;
 use think\Db;
 use think\facade\Request;
@@ -21,9 +22,9 @@ class Role extends Common
 
     public function add()
     {
-        $powermodel=new Powermodel();
+        $powerService=new PowerService();
         if( Request::isGet()){
-            $powers=$powermodel->getPowers();
+            $powers=$powerService->getPowers();
             return view('',["powers"=>$powers]);
         }elseif(Request::isPost()){
             //接值

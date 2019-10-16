@@ -3,7 +3,6 @@
 namespace app\admin\controller;
 
 namespace app\admin\controller;
-use app\admin\model\Powermodel;
 use app\admin\service\PowerService;
 use think\Controller;
 use think\Db;
