@@ -14,7 +14,7 @@ class common extends Controller{
         $session=Session::get("admin");
         if($cookie&&!$session){
             $session=$cookie;
-            Session::add("admin",$cookie);
+            Session::set("admin",$cookie);
         }
         if(!$cookie&&!$session){
             $this->error("请先登录");

@@ -1,0 +1,109 @@
+{extend name="public/base" /}
+
+{block name="title"}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DouPHP 管理中心 - 属性添加 </title>
+<meta name="Copyright" content="Douco Design." />
+<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/global.js"></script>
+<script>
+ $(function(){
+  $("select[name='type_id']").change(function(){
+   var type_id=$(this).val();
+   $.ajax({
+    type: "post",
+    url: "{:url('ajax')}",
+    dataType: "json",
+    data: {
+     type_id: type_id
+    },
+    success:function(data){
+     html="";
+     if(data.status == 1){
+
+
+      html+="<td align='right'>类型组名</td>";
+      html+="<td>";
+      html+="<select name='type_group'>";
+      $.each(data.content, function (k, v){
+       html+="<option value=''>"+v+"</option>"
+      });
+      html+="</select></td>"
+     }
+     $(".aa").html(html);
+    }
+
+   })
+  })
+     $("input[name=attr_input_type]").change(function(){
+         var type=$(this).val();
+         if(type==1){
+             $("textarea[name=attr_select]").prop("disabled",true);
+         }else{
+             $("textarea[name=attr_select]").prop("disabled",false);
+         }
+     })
+ });
+</script>
+{/block}
+
+{block name="body"}
+ <div id="dcMain">
+   <!-- 当前位置 -->
+<div id="urHere">DouPHP 属性管理<b>></b><strong>属性添加</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+            <h3><a href="{:url('index')}" class="actionBtn">属性列表</a>属性添加</h3>
+    <form action="" method="post">
+     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+      <tr>
+       <td width="80" align="right">属性名称</td>
+       <td>
+        <input type="text" name="attr_name" value="" size="40" class="inpMain" />
+       </td>
+      </tr>
+
+      <tr>
+       <td align="right">属性类型</td>
+       <td>
+        <input type="radio" name="attr_type" checked value="1" />规格
+        <input type="radio" name="attr_type" value="0" />参数
+       </td>
+       </tr>
+      <tr>
+       <td align="right">所属类型</td>
+       <td>
+        <select name="type_id">
+         {foreach $groups as $key=>$vo }
+         <option {if $vo.type_id eq $group.type_id}selected {/if} value="{$vo.type_id}">{$vo.type_name}</option>
+         {/foreach}
+        </select>
+       </td>
+      </tr>
+         <tr class="aa"></tr>
+      <tr>
+       <td align="right">属性输入方式</td>
+       <td>
+        <input type="radio" name="attr_input_type" checked value="1" /> 手工录入
+        <input type="radio" name="attr_input_type" value="0" />从下面的列表中选择（一行代表一个可选值）
+        <input type="radio" name="attr_input_type" value="-1" />多行文本框
+       </td>
+      </tr>
+      <tr>
+       <td align="right">可选值列表</td>
+       <td>
+        <textarea name="attr_select" cols="30" rows="5" disabled></textarea>
+       </td>
+      </tr>
+      <tr>
+       <td>
+        <input type="hidden" name="power_id" value="" />
+        <input class="btn" type="submit" value="提交" />
+       </td>
+       <td></td>
+      </tr>
+     </table>
+    </form>
+       </div>
+ </div>
+ <div class="clear"></div>
+{/block}

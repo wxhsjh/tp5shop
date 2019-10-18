@@ -10,7 +10,7 @@ namespace app\admin\service;
 use app\admin\model\Type;
 
 class TypeService{
-//取所有得分类
+//取所有得类型
     public function getTypes(){
         $types=new Type();
         $types = $types->all();

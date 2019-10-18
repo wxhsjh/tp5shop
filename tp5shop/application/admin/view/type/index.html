@@ -17,7 +17,8 @@
       <tr>
         <th width="120" align="center">类型id</th>
         <th width="120" align="center">类型名称</th>
-        <th width="120" align="center">类型组</th>
+        <th width="120" align="center">类型组
+          <th width="120" align="center">属性数</th>
         <th width="80" align="center">操作</th>
       </tr>
         {foreach $types as $key=>$vo }
@@ -25,7 +26,8 @@
         <td align="center">{$vo.type_id}</td>
         <td align="center">{$vo.type_name}</td>
         <td align="left">{$vo.type_group}</td>
-        <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.type_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.type_id}">删除</a></td>
+            <td align="center">{$vo.attr_num}</td>
+        <td align="center"><a href="{:url('Attr/index')}?type_id={$vo.type_id}">属性列表</a> |<a href="product_category.php?rec=edit&cat_id={$vo.type_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.type_id}">删除</a></td>
      </tr>
         {/foreach}
           </table>

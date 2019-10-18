@@ -1,0 +1,63 @@
+{extend name="public/base" /}
+
+{block name="title"}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DouPHP 管理中心 - 属性管理 </title>
+<meta name="Copyright" content="Douco Design." />
+<link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/global.js"></script>
+
+{/block}
+
+{block name="body"}
+<div id="dcMain">
+    <!-- 当前位置 -->
+    <div id="urHere">DouPHP 管理中心<b>></b><strong>属性管理</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+    <h3><a href="{:url('add')}?type_id={$group['type_id']}" class="actionBtn add">添加属性</a>属性列表</h3>
+    <div>
+        <form>
+            按商类型显示：
+            <select name="type_name">
+                {foreach $groups as $key=>$vo }
+                <option {if $vo.type_id eq $group.type_id}selected {/if} value="{$vo.type_id}">{$vo.type_name}</option>
+                {/foreach}
+            </select>
+        </form>
+    </div>
+    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+        <tr>
+            <th width="60" align="left">属性id</th>
+            <th width="120" align="left">属性名称</th>
+            <th width="120" align="left">属性类型</th>
+            <th width="120" align="left">所属类型</th>
+            <th width="120" align="left">属性录入方式</th>
+            <th width="120" align="left">属性可选值</th>
+            <th width="80" align="left">操作</th>
+        </tr>
+        {foreach $attrs as $key=>$vo }
+        <tr>
+            <td align="left">{$vo.attr_id}</td>
+            <td align="left">{$vo.attr_name}</td>
+            <td align="left">
+                {if $vo.attr_type == 0}参数
+                {else}规格
+                {/if}
+            </td>
+            <td align="left">{$vo.type_name}</td>
+            <td align="left">
+                {if $vo.attr_input_type == 0}下拉框
+                {else}手工录入
+                {/if}
+            </td>
+            <td align="left">{$vo.attr_select}</td>
+            <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.attr_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.attr_id}">删除</a></td>
+        </tr>
+        {/foreach}
+    </table>
+</div>
+</div>
+<div class="clear"></div>
+{/block}
+
+
