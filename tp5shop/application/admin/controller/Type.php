@@ -28,7 +28,6 @@ class Type extends Common
         }elseif(Request::isPost()){
             //接值
             $data = input("post.");
-            dump($data);
             $type=new TypeService();
             $type=$type->addType($data);
             if($type){

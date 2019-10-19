@@ -21,13 +21,11 @@
     success:function(data){
      html="";
      if(data.status == 1){
-
-
       html+="<td align='right'>类型组名</td>";
       html+="<td>";
       html+="<select name='type_group'>";
       $.each(data.content, function (k, v){
-       html+="<option value=''>"+v+"</option>"
+       html+="<option value='"+v+"'>"+v+"</option>"
       });
       html+="</select></td>"
      }

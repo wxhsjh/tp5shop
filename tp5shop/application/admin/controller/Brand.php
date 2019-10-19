@@ -76,9 +76,9 @@ class Brand extends Common
 //                $file = Request::file('brand_img');
 //                $info=$file->validate(['size'=>2048000,'ext'=>'gif,png,jpg'])->move("uploads/brand");
 //                if($info){
-//                    $data['brand_img']=request()->domain()."/uploads/brand/".str_replace('\\',"/",$info->getSaveName());
+//                    $date['brand_img']=request()->domain()."/uploads/brand/".str_replace('\\',"/",$info->getSaveName());
 //                    //入库
-//                    $brand=\app\admin\model\Brand::addBrand($data);
+//                    $brand=\app\admin\model\Brand::addBrand($date);
 //                    if($brand){
 //                        $this->success('添加成功','index');
 //                    }else{
