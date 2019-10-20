@@ -6,7 +6,10 @@ namespace app\admin\controller;
 use app\admin\model\Attr;
 use app\admin\model\Brand;
 use app\admin\model\Catemodel;
+use app\admin\service\GoodsService;
 use app\admin\service\TypeService;
+use Qiniu\Auth as Auth;
+use Qiniu\Storage\UploadManager;
 use think\Controller;
 use think\Db;
 use think\facade\Request;
@@ -18,9 +21,9 @@ class Goods extends Common
 
     public function index()
     {
-        $catemodel=new Catemodel();
-        $cates=$catemodel->getCates();
-        return view('',["cates"=>$cates]);
+        $goodsService=new GoodsService();
+        $goods=$goodsService->getgoods();
+        return view("",["goods"=>$goods]);
     }
 
     public function add()
@@ -33,31 +36,27 @@ class Goods extends Common
             $type=new TypeService();
             $types=$type->getTypes();
             return view('',["cates"=>$cates,"brands"=>$brands,"types"=>$types]);
-        }elseif(Request::isPost()){
+        }elseif(Request::isPost()) {
             //接值
-            $data = input("post.");
-            dump($data);exit;
-            $validate=$this->validate(
-                [
-                    'cate_name'=>$data['cate_name'],
-                    'cate_order'=>$data['cate_order'],
-                    'cate_pid'=>$data['cate_pid']
-
-                ],
-                'app\admin\validate\Cate'
-            );
-            if ($validate!==true) {
-                $this->error($validate);
-            }
-            //入库
-            $cate=$catemodel->addCate($data);
-            if($cate){
-                $this->success('添加成功','index');
+            $data = Request::except(['weight_unit', 'attr_select', 'attr_price_list'], 'post');
+            $attr=Request::only('attr_id,attr_val,attr_price');
+            dump($attr);exit;
+            $goods_img = $_FILES["goods_img"];
+            //$goodsService=new GoodsService();
+            //$path=$goodsService->qiniu($goods_img);
+            //$data['goods_img']=$path;
+            $good=new \app\admin\model\Goods();
+            $goods=$good->save($data);
+            $goods_id=$good->goods_id;
+            echo $goods_id;exit();
+            if($goods){
+                echo json_encode(["status"=>1,"msg"=>"ok"]);
             }else{
-                $this->error('添加失败');
+                echo json_encode(["status"=>0,"msg"=>"添加失败"]);
+            }
             }
         }
-    }
+
 
     public function ajax(){
         $type_id=request()->post("type_id");

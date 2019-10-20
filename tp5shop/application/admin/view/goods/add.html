@@ -46,7 +46,6 @@
 		prettyPrint();
 	});
 </script>
-
 <!--编辑器引入结束-->
 <style>
 	.aa{
@@ -131,6 +130,15 @@
 			$(this).parents("tr").remove();
 			//复制当前点击的节点，并将它追加到《ul》元素中，当添加参数时复制它的事件
 		});
+		$(".addphoto").click(function(){
+			var a=$(this).parents("tr").clone(true);
+			a.find("a").html("[-]").attr("class","delphoto");
+			a.insertAfter($(this).parents("tr"));//复制当前点击的节点，并将它追加到《ul》元素中，当添加参数时复制它的事件
+		});
+		$(document).on("click",".delphoto",function(){
+			$(this).parents("tr").remove();
+			//复制当前点击的节点，并将它追加到《ul》元素中，当添加参数时复制它的事件
+		});
 		$("select[name='type_id']").change(function(){
 			var type_id=$(this).val();
 			$.ajax({
@@ -146,17 +154,17 @@
 						$.each(data.attrs, function (k, v){
 							if(v.attr_input_type==1){
 								if(v.attr_type==1){
-									html+="<tr><td><a href='javascript:;' class='clone'>[+]</a>"+v.attr_name+"</td>";
-									html+="<td><input type='text' name='attr_select' value='' size='40'>属性价格 <input type='text' name='attr_price_list[]' value='' size='5' maxlength='10'></td></tr>"
+									html+="<tr><td><a href='javascript:;' class='clone'>[+]</a><input type='hidden' name='attr_id' value='"+ v.attr_id+"'>"+v.attr_name+"</td>";
+									html+="<td><input type='text' name='attr_val[]' value='' size='40'>属性价格 <input type='text' name='attr_price[]' value='' size='5' maxlength='10'></td></tr>"
 								}else{
-									html+="<tr><td>"+v.attr_name+"</td>";
-									html+="<td><input type='text' name='attr_select'></td></tr>"
+									html+="<tr><td><input type='hidden' name='attr_id' value='"+ v.attr_id+"'>"+v.attr_name+"</td>";
+									html+="<td><input type='text' name='attr_val[]'></td></tr>"
 								}
 
 							}else{
-								html+="<tr><td>"+v.attr_name+"</td>";
+								html+="<tr><td><input value='"+ v.attr_id+"' type='hidden' name='attr_id'>"+v.attr_name+"</td>";
 								html+="<td>";
-								html+="<select name='attr_select'>";
+								html+="<select name='attr_val[]'>";
 								$.each(v.attr_select, function (k1, v1){
 									html+="<option value='"+v1+"'>"+v1+"</option>"
 								});
@@ -168,7 +176,26 @@
 				}
 			})
 		})
-
+		$("#sure").click(function(){
+			//将form表单变成一个formdata对象，通过Ajax发过去
+			var formData=new FormData($("form[name='goods']").get(0));
+			$.ajax({
+				type:"post",
+				url:"",
+				data:formData,
+				processData: false,
+				contentType: false,
+				dataType:"json",
+				success:function(data){
+					if(data.status==1){
+						location.href="index";
+					}
+					else {
+						alert("添加失败");
+					}
+				}
+			})
+		});
 		})
 </script>
 <div id="dcMain">
@@ -182,7 +209,7 @@
 		<span id="dd">商品属性</span>
 		<span id="ee">商品相册</span>
 	</p>
-	<form action="" method="post" enctype="multipart/form-data">
+	<form action="" name="goods">
 			<!--通用信息-->
 			<table width="100%" border="0" cellpadding="8" cellspacing="0" id="ab"  class="tableBasic">
 				<tr>
@@ -197,7 +224,7 @@
 				<tr>
 					<td class="label">商品分类：</td>
 					<td>
-						<select name="cate_pid" id="">
+						<select name="cate_id" id="">
 							<option value="0">--请选择分类--</option>
 							{foreach $cates as $key=>$vo }
 							<option value="{$vo.cate_id}">{$vo.level|str_repeat="---",###}{$vo.cate_name}</option>
@@ -250,21 +277,16 @@
 						<input type="file" name="goods_img" size="35">
 					</td>
 				</tr>
-				<tr id="auto_thumb_1">
-					<td class="label"> 上传商品缩略图：</td>
-					<td id="auto_thumb_3">
-						<input type="file" name="goods_thumb" size="35" >
-						<br><label for="auto_thumb"><input type="checkbox" id="auto_thumb" name="auto_thumb" value="0">自动生成商品缩略图</label>            </td>
-				</tr>
 			</table>
+
 			<!-- 详细描述 -->
 
 		<table width="100%" border="0" cellpadding="8" cellspacing="0" id="ac"  class="tableBasic">
-					<td align="right" valign="top">商品描述</td>
-					<td>
-
-						<textarea id="content" name="goods_content" style="width:780px;height:400px;" class="textArea"></textarea>
-					</td>
+			<tr>
+			<td align="right" valign="top">商品描述</td>
+			<td>
+				<textarea id="content" name="goods_content" style="width:780px;height:400px;" class="textArea"></textarea>
+			</td>
 				</tr>
 					</table>
 
@@ -333,36 +355,20 @@
 		<table width="100%" border="0" cellpadding="8" cellspacing="0" id="af"  class="tableBasic">
 
 <tr>
-	<td>
-		<div id="gallery_41" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
-			<a href="javascript:;" onclick="if (confirm('您确实要删除该图片吗？')) dropImg('41')">[-]</a><br>
-			<a href="goods.php?act=show_image&amp;img_url=images/200905/goods_img/32_P_1242110760641.jpg" target="_blank">
-				<img src="../images/200905/thumb_img/32_thumb_P_1242110760997.jpg" width="100" height="100" border="0">
-			</a><br>
-			<input type="text" value="" size="15" name="old_img_desc[41]">
-		</div>
-	</td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr>
-	<td>
-		<a href="javascript:;" onclick="addImg(this)">[+]</a>
-		图片描述 <input type="text" name="img_desc[]" size="20">
+	<td style="font-size: 15px;">
+		<a href="javascript:;" class="addphoto">[+]</a>
 		上传文件 <input type="file" name="img_url[]">
-		<input type="text" size="40" value="或者输入外部图片链接地址" style="color:#aaa;" onfocus="if (this.value == '或者输入外部图片链接地址'){this.value='http://';this.style.color='#000';}" name="img_file[]">
 	</td>
 </tr>
 </table>
 
 
 			<div align="center">
-				<input type="hidden" name="goods_id" value="32">
-				<input type="button" value=" 确定 " class="btn" onclick="validate('32')">
+				<input class="btn" type="button" id="sure" value="确定" />
 				<input type="reset" value=" 重置 " class="btn">
 			</div>
-			<input type="hidden" name="act" value="update">
 
-		</form>
+	</form>
 	</div>
 </div>
 <script type="text/javascript">$( "input[name='act_start_time'],input[name='act_stop_time']" ).datetimepicker();</script>

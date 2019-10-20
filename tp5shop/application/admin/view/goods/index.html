@@ -2,7 +2,7 @@
 
 {block name="title"}
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DouPHP 管理中心 - 权限管理 </title>
+<title>DouPHP 管理中心 - 商品管理 </title>
 <meta name="Copyright" content="Douco Design." />
 <link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
@@ -12,27 +12,49 @@
 {block name="body"}
 <div id="dcMain">
     <!-- 当前位置 -->
-    <div id="urHere">DouPHP 管理中心<b>></b><strong>权限管理</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
-    <h3><a href="{:url('add')}" class="actionBtn add">添加权限</a>权限列表</h3>
+    <div id="urHere">DouPHP 管理中心<b>></b><strong>商品管理</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+    <h3><a href="{:url('add')}" class="actionBtn add">添加商品</a>商品列表</h3>
     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
         <tr>
-            <th width="120" align="left">权限名称</th>
-            <th width="120" align="center">是否显示左侧</th>
-            <th width="120" align="left">权限控制器</th>
-            <th width="120" align="left">权限方法</th>
+            <th width="120" align="left">商品编号</th>
+            <th width="120" align="left">商品名称</th>
+            <th width="120" align="left">商品货号</th>
+            <th width="120" align="left">商品价格</th>
+            <th width="120" align="center">是否上架</th>
+            <th width="120" align="center">是否精品</th>
+            <th width="120" align="center">是否新品</th>
+            <th width="120" align="center">是否热销</th>
+            <th width="120" align="left">商品库存</th>
             <th width="80" align="center">操作</th>
         </tr>
-        {foreach $powers as $key=>$vo }
+        {foreach $goods as $key=>$vo }
         <tr>
-            <td align="left">{$vo.level|str_repeat="---",###}{$vo.power_name}</td>
+            <td align="left">{$vo.goods_id}</td>
+            <td align="left">{$vo.goods_name}</td>
+            <td align="left">{$vo.sn_id}</td>
+            <td align="left">{$vo.goods_price}</td>
             <td align="center">
-                {if $vo.power_ismu == 1}显示
-                {else}不显示
+                {if $vo.goods_status == 1}上架
+                {else}下架
                 {/if}
             </td>
-            <td align="left">{$vo.power_controller}</td>
-            <td align="left">{$vo.power_action}</td>
-            <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.power_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.power_id}">删除</a></td>
+            <td align="center">
+                {if $vo.goods_best == 1}是
+                {else}不是
+                {/if}
+            </td>
+            <td align="center">
+                {if $vo.goods_new == 1}是
+                {else}不是
+                {/if}
+            </td>
+            <td align="center">
+                {if $vo.goods_hot == 1}是
+                {else}不是
+                {/if}
+            </td>
+            <td align="center">{$vo.goods_num}</td>
+            <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.goods_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.goods_id}">删除</a></td>
         </tr>
         {/foreach}
     </table>
