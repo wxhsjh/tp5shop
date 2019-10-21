@@ -11,6 +11,7 @@ use app\admin\model\Attr;
 use app\admin\model\Type;
 use think\Db;
 
+
 class AttrService{
 //取所有得分类
     public function getTypes(){

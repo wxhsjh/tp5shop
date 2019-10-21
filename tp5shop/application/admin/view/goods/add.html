@@ -7,6 +7,12 @@
 <link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/admin/js/global.js"></script>
+<!-- KindEditor -->
+<link rel="stylesheet" href="/static/admin/js/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="/static/admin/js/kindeditor/plugins/code/prettify.css" />
+<script charset="utf-8" src="/static/admin/js/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="/static/admin/js/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="/static/admin/js/kindeditor/plugins/code/prettify.js"></script>
 {/block}
 
 {block name="body"}
@@ -19,11 +25,6 @@
 {load href="/static/date/jquery-ui-timepicker-zh-CN.js" /}
 <!--日期引入结束-->
 <!--编辑器引入-->
-{load href="/static/admin/js/kindeditor/themes/default/default.css" /}
-{load href="/static/admin/js/kindeditor/plugins/code/prettify.css" /}
-{load href="/static/admin/js/kindeditor/kindeditor.js" /}
-{load href="/static/admin/js/kindeditor/lang/zh_CN.js" /}
-{load href="/static/admin/js/kindeditor/plugins/code/prettify.js" /}
 <script>
 	KindEditor.ready(function(K) {
 		var editor1 = K.create('textarea[name="content"]', {
@@ -154,15 +155,14 @@
 						$.each(data.attrs, function (k, v){
 							if(v.attr_input_type==1){
 								if(v.attr_type==1){
-									html+="<tr><td><a href='javascript:;' class='clone'>[+]</a><input type='hidden' name='attr_id' value='"+ v.attr_id+"'>"+v.attr_name+"</td>";
+									html+="<tr><td><a href='javascript:;' class='clone'>[+]</a><input type='hidden' name='attr_id[]' value='"+ v.attr_id+"'><input type='hidden' name='attr_name[]' value='"+ v.attr_name+"'>"+v.attr_name+"</td>";
 									html+="<td><input type='text' name='attr_val[]' value='' size='40'>属性价格 <input type='text' name='attr_price[]' value='' size='5' maxlength='10'></td></tr>"
 								}else{
-									html+="<tr><td><input type='hidden' name='attr_id' value='"+ v.attr_id+"'>"+v.attr_name+"</td>";
+									html+="<tr><td><input type='hidden' name='attr_id[]' value='"+ v.attr_id+"'><input type='hidden' name='attr_name[]' value='"+ v.attr_name+"'>"+v.attr_name+"</td>";
 									html+="<td><input type='text' name='attr_val[]'></td></tr>"
 								}
-
 							}else{
-								html+="<tr><td><input value='"+ v.attr_id+"' type='hidden' name='attr_id'>"+v.attr_name+"</td>";
+								html+="<tr><td><input value='"+ v.attr_id+"' type='hidden' name='attr_id[]'><input type='hidden' name='attr_name[]' value='"+ v.attr_name+"'>"+v.attr_name+"</td>";
 								html+="<td>";
 								html+="<select name='attr_val[]'>";
 								$.each(v.attr_select, function (k1, v1){
@@ -285,7 +285,7 @@
 			<tr>
 			<td align="right" valign="top">商品描述</td>
 			<td>
-				<textarea id="content" name="goods_content" style="width:780px;height:400px;" class="textArea"></textarea>
+				<textarea id="content" name="content" style="width:780px;height:400px;" class="textArea"></textarea>
 			</td>
 				</tr>
 					</table>

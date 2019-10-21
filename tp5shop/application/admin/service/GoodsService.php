@@ -8,6 +8,8 @@
 namespace app\admin\service;
 use app\admin\model\Goods;
 use think\facade\Session;
+use Qiniu\Auth as Auth;
+use Qiniu\Storage\UploadManager;
 
 class GoodsService{
     public function getgoods(){
