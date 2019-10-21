@@ -2,7 +2,7 @@
 
 {block name="title"}
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DouPHP 管理中心 - 商品管理 </title>
+<title>DouPHP 管理中心 - 货品管理 </title>
 <meta name="Copyright" content="Douco Design." />
 <link href="/static/admin/css/public.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
@@ -16,7 +16,7 @@
     <h3><a href="{:url('add')}" class="actionBtn add">添加商品</a>商品列表</h3>
     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
         <tr>
-            <th width="60" align="left">商品编号</th>
+            <th width="120" align="left">商品编号</th>
             <th width="120" align="left">商品名称</th>
             <th width="120" align="left">商品货号</th>
             <th width="120" align="left">商品价格</th>
@@ -25,7 +25,7 @@
             <th width="120" align="center">是否新品</th>
             <th width="120" align="center">是否热销</th>
             <th width="120" align="left">商品库存</th>
-            <th width="180" align="center">操作</th>
+            <th width="80" align="center">操作</th>
         </tr>
         {foreach $goods as $key=>$vo }
         <tr>

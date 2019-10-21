@@ -5,10 +5,8 @@ namespace app\admin\controller;
 namespace app\admin\controller;
 use app\admin\model\Attr;
 use app\admin\model\Brand;
-use app\admin\model\BrandsCate;
 use app\admin\model\Catemodel;
 use app\admin\model\GoodsAttr;
-use app\admin\model\GoodsCate;
 use app\admin\service\GoodsService;
 use app\admin\service\TypeService;
 use think\Controller;
@@ -17,11 +15,16 @@ use think\facade\Request;
 use think\facade\Session;
 use think\facade\Validate;
 
-class Goods extends Common
+class Product extends Common
 {
 
     public function index()
     {
+        $goods_id=request()->get("goods_id","");
+        dump($goods_id);exit;
+        if(Request::isGet()){
+
+        }
         $goodsService=new GoodsService();
         $goods=$goodsService->getgoods();
         return view("",["goods"=>$goods]);
@@ -38,33 +41,46 @@ class Goods extends Common
             $types=$type->getTypes();
             return view('',["cates"=>$cates,"brands"=>$brands,"types"=>$types]);
         }elseif(Request::isPost()) {
-            $goodsService=new GoodsService();
             //接值
             $data = Request::except(['weight_unit', 'attr_select', 'attr_price_list'], 'post');
             $attr=Request::only('attr_id,attr_name,attr_val,attr_price');
-            $attrs=$goodsService->attr($attr);
+            if(empty($attr["attr_price"])){
+                $attrs=[];
+                foreach($attr["attr_id"] as $k=>$v){
+                    $attrs[$k]["attr_id"]=$v;
+                }
+                foreach($attr["attr_name"] as $k1=>$v1){
+                    $attrs[$k1]["attr_name"]=$v1;
+                }
+                foreach($attr["attr_val"] as $k2=>$v2){
+                    $attrs[$k2]["attr_val"]=$v2;
+                }
+            }else{
+                $attrs=[];
+                foreach($attr["attr_id"] as $k=>$v){
+                    $attrs[$k]["attr_id"]=$v;
+                }
+                foreach($attr["attr_name"] as $k1=>$v1){
+                    $attrs[$k1]["attr_name"]=$v1;
+                }
+                foreach($attr["attr_val"] as $k2=>$v2){
+                    $attrs[$k2]["attr_val"]=$v2;
+                }
+                foreach($attr["attr_price"] as $k3=>$v3){
+                    $attrs[$k3]["attr_price"]=$v3;
+                }
+            }
             $goods_img = $_FILES["goods_img"];
+            $goodsService=new GoodsService();
             $path=$goodsService->qiniu($goods_img);
             $data['goods_img']=$path;
             $good=new \app\admin\model\Goods();
-            //入库goods表
             $goods=$good->save($data);
             $goods_id=$good->goods_id;
-            //入库goods_attr表
             foreach($attrs as $key=>$val){
-                $attrs=$good->attr()->attach($val["attr_id"],$val);
+                $attrs=$good->attr()->attach($goods_id,$val);
             }
-            //入库goods_cate表
-            $data1["cate_id"]=$data["cate_id"];
-            $data1["goods_id"]=$goods_id;
-            $goodscate=new GoodsCate();
-            $goodscate=$goodscate->save($data1);
-            //入库brand_cate表
-            $data2["brand_id"]=$data["brand_id"];
-            $data2["cate_id"]=$data["cate_id"];
-            $brandcate=new BrandsCate();
-            $brandcate=$brandcate->save($data2);
-            if($goods&&$attrs&&$goodscate&&$brandcate){
+            if($goods&&$attrs){
                 echo json_encode(["status"=>1,"msg"=>"ok"]);
             }else{
                 echo json_encode(["status"=>0,"msg"=>"添加失败"]);

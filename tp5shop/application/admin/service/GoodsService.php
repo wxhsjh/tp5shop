@@ -42,5 +42,33 @@ class GoodsService{
         }
         return $path;
     }
-
+    public function attr($attr){
+        if(empty($attr["attr_price"])){
+            $attrs=[];
+            foreach($attr["attr_id"] as $k=>$v){
+                $attrs[$k]["attr_id"]=$v;
+            }
+            foreach($attr["attr_name"] as $k1=>$v1){
+                $attrs[$k1]["attr_name"]=$v1;
+            }
+            foreach($attr["attr_val"] as $k2=>$v2){
+                $attrs[$k2]["attr_val"]=$v2;
+            }
+        }else{
+            $attrs=[];
+            foreach($attr["attr_id"] as $k=>$v){
+                $attrs[$k]["attr_id"]=$v;
+            }
+            foreach($attr["attr_name"] as $k1=>$v1){
+                $attrs[$k1]["attr_name"]=$v1;
+            }
+            foreach($attr["attr_val"] as $k2=>$v2){
+                $attrs[$k2]["attr_val"]=$v2;
+            }
+            foreach($attr["attr_price"] as $k3=>$v3){
+                $attrs[$k3]["attr_price"]=$v3;
+            }
+        }
+        return $attrs;
+    }
 }
