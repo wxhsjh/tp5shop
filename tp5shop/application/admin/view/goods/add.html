@@ -162,13 +162,14 @@
 									html+="<td><input type='text' name='attr_val[]'></td></tr>"
 								}
 							}else{
-								html+="<tr><td><input value='"+ v.attr_id+"' type='hidden' name='attr_id[]'><input type='hidden' name='attr_name[]' value='"+ v.attr_name+"'>"+v.attr_name+"</td>";
+								html+="<tr><td><a href='javascript:;' class='clone'>[+]</a><input value='"+ v.attr_id+"' type='hidden' name='attr_id[]'><input type='hidden' name='attr_name[]' value='"+ v.attr_name+"'>"+v.attr_name+"</td>";
 								html+="<td>";
 								html+="<select name='attr_val[]'>";
 								$.each(v.attr_select, function (k1, v1){
 									html+="<option value='"+v1+"'>"+v1+"</option>"
 								});
-								html+="</select></td></tr>"
+								html+="</select>";
+								html+="属性价格 <input type='text' name='attr_price[]' value='' size='5' maxlength='10'></td></tr>"
 							}
 						});
 					}
@@ -356,7 +357,7 @@
 
 <tr>
 	<td style="font-size: 15px;">
-		<a href="javascript:;" class="addphoto">[+]</a>
+		<a href='javascript:;' class='clone'>[+]</a>
 		上传文件 <input type="file" name="img_url[]">
 	</td>
 </tr>

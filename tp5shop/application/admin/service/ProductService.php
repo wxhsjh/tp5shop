@@ -7,34 +7,27 @@
  */
 namespace app\admin\service;
 
-use app\admin\model\Attr;
-use app\admin\model\Type;
+use app\admin\model\Goods;
 use think\Db;
 
 
 class ProductService{
-//取所有得分类
-    public function getTypes(){
-        $types=new Type();
-        $types = $types->all();
-        return $types;
+//取所有得货品
+    public function getProduct($goods_id){
+        $good=Goods::get($goods_id);
+        $goods=$good->product;
+        return $goods;
     }
     public function getAttr($goods_id){
-        $type=new Type();
-        $type = $type->get($type_id);
-        return $type;
-    }
-    //取所有的属性
-    public function getAttrs(){
-        $attrs=Db::table('shop_attr')
-            ->alias('a')
-            ->join(['shop_type'=>'t'],'a.type_id=t.type_id')
-            ->select();
-        return $attrs;
-    }
-    public function addAttr($data){
-        $attr=new Attr();
-        $attr=$attr->save($data);
-        return $attr;
-    }
+        $goods = Goods::get($goods_id);
+        $goods->attr;
+        //dump($goods["attr"]);
+        foreach($goods["attr"] as $key=>$val){
+            if ($val["pivot"]["attr_price"]!==null){
+                $attr_name[$val["attr_name"]][$val["pivot"]["goods_attr_id"]] = $val["pivot"]["attr_val"];
+
+            }
+        }
+        return $attr_name;
+        }
 }

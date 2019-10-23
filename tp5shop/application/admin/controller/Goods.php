@@ -43,6 +43,7 @@ class Goods extends Common
             $data = Request::except(['weight_unit', 'attr_select', 'attr_price_list'], 'post');
             $attr=Request::only('attr_id,attr_name,attr_val,attr_price');
             $attrs=$goodsService->attr($attr);
+            dump($attrs);exit();
             $goods_img = $_FILES["goods_img"];
             $path=$goodsService->qiniu($goods_img);
             $data['goods_img']=$path;
@@ -54,6 +55,7 @@ class Goods extends Common
             foreach($attrs as $key=>$val){
                 $attrs=$good->attr()->attach($val["attr_id"],$val);
             }
+            //
             //入库goods_cate表
             $data1["cate_id"]=$data["cate_id"];
             $data1["goods_id"]=$goods_id;
@@ -71,8 +73,6 @@ class Goods extends Common
             }
             }
         }
-
-
     public function ajax(){
         $type_id=request()->post("type_id");
         $attr=new Attr();
