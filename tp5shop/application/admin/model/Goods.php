@@ -20,4 +20,16 @@ class Goods extends Model{
     {
         return $this->hasMany('Product','goods_id');
     }
+    public function photo()
+    {
+        return $this->hasMany('Photo','goods_id');
+    }
+    public function brand()
+    {
+        return $this->hasMany('Brand','goods_id');
+    }
+    public function cate()
+    {
+        return $this->belongsToMany('Cate',"goods_cate","cate_id","goods_id");
+    }
 }

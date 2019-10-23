@@ -27,9 +27,14 @@ class Product extends Common
         foreach($product as $key=>$val){
             $arr=explode("|",$val["goods_attr"]);
             $goodsattr=GoodsAttr::where("goods_id",$goods_id)->all($arr)->toArray();
+            //dump($goodsattr);
             $pro=array_column($goodsattr,'attr_val','goods_attr_id');
+           // dump($pro);
+            $price=array_column($goodsattr,'attr_price','goods_attr_id');
+            $price=array_sum($price);
             $attrs=implode("+",$pro);
             $val["goods_attr"]=$attrs;
+            $val["price"]=$price;
         }
         $goods=Goods::get($goods_id);
         return view("", ["attr" => $attr,"goods" => $goods,"product" => $product]);

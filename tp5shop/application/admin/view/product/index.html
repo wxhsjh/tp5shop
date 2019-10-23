@@ -20,12 +20,14 @@
             <th width="240px" align="center">货品属性</th>
             <th width="240px" align="center">货品号</th>
             <th width="240px" align="center">货品库存</th>
+            <th width="240px" align="center">价格</th>
         </tr>
         {foreach $product as $k=>$v }
         <tr>
-            <td>{$v.goods_attr}</td>
-            <td>{$v.product_sn}</td>
-            <td>{$v.product_num}</td>
+            <td align="center">{$v.goods_attr}</td>
+            <td align="center">{$v.product_sn}</td>
+            <td align="center">{$v.product_num}</td>
+            <td align="center">{$v.price}</td>
         </tr>
         {/foreach}
     </table>

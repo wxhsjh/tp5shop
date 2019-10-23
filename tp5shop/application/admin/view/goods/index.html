@@ -25,6 +25,8 @@
             <th width="120" align="center">是否新品</th>
             <th width="120" align="center">是否热销</th>
             <th width="120" align="left">商品库存</th>
+            <th width="120" align="left">商品分类</th>
+            <th width="120" align="left">商品品牌</th>
             <th width="180" align="center">操作</th>
         </tr>
         {foreach $goods as $key=>$vo }
@@ -54,8 +56,15 @@
                 {/if}
             </td>
             <td align="center">{$vo.goods_num}</td>
+            {foreach $vo.cate as $k1=>$v1}
+            <td>
+            {$v1.cate_name}
+            </td>
+            {/foreach}
+            <td align="center">{$vo.brand}</td>
             <td align="center"><a href="product_category.php?rec=edit&cat_id={$vo.goods_id}">编辑</a> | <a href="product_category.php?rec=del&cat_id={$vo.goods_id}">删除</a>|<a href="{:url('Product/add')}?goods_id={$vo.goods_id}">货品列表</a></td>
         </tr>
+
         {/foreach}
     </table>
 </div>

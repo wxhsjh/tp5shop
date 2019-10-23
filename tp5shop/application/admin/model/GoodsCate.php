@@ -9,5 +9,5 @@ namespace app\admin\model;
 use think\model\Pivot;
 
 class GoodsCate extends Pivot{
-
+    protected $pk ="goods_cate_id";
 }

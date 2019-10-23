@@ -5,10 +5,12 @@ namespace app\admin\controller;
 namespace app\admin\controller;
 use app\admin\model\Attr;
 use app\admin\model\Brand;
+use app\admin\model\BrandCate;
 use app\admin\model\BrandsCate;
 use app\admin\model\Catemodel;
 use app\admin\model\GoodsAttr;
 use app\admin\model\GoodsCate;
+use app\admin\model\Photo;
 use app\admin\service\GoodsService;
 use app\admin\service\TypeService;
 use think\Controller;
@@ -22,8 +24,14 @@ class Goods extends Common
 
     public function index()
     {
-        $goodsService=new GoodsService();
-        $goods=$goodsService->getgoods();
+        $goods=\app\admin\model\Goods::all();
+        foreach($goods as $k=>$v){
+            $v->cate;
+        }
+        foreach($goods as $key=>$val){
+            $brand=Brand::get($val["brand_id"]);
+            $val["brand"]=$brand["brand_name"];
+        }
         return view("",["goods"=>$goods]);
     }
 
@@ -43,7 +51,6 @@ class Goods extends Common
             $data = Request::except(['weight_unit', 'attr_select', 'attr_price_list'], 'post');
             $attr=Request::only('attr_id,attr_name,attr_val,attr_price');
             $attrs=$goodsService->attr($attr);
-            dump($attrs);exit();
             $goods_img = $_FILES["goods_img"];
             $path=$goodsService->qiniu($goods_img);
             $data['goods_img']=$path;
@@ -64,9 +71,28 @@ class Goods extends Common
             //入库brand_cate表
             $data2["brand_id"]=$data["brand_id"];
             $data2["cate_id"]=$data["cate_id"];
-            $brandcate=new BrandsCate();
+            $brandcate=new BrandCate();
             $brandcate=$brandcate->save($data2);
-            if($goods&&$attrs&&$goodscate&&$brandcate){
+            //相册表
+            $goods=new \app\admin\model\Goods();
+            $goods_img[] = $_FILES["img_url"];
+            $img=[];
+            foreach($_FILES["img_url"]["name"] as $k=>$v) {
+                if (!empty($v)) {
+                    $img["name"] = $v;
+                    $img["type"] = $_FILES["img_url"]["type"][$k];
+                    $img["tmp_name"] = $_FILES["img_url"]["tmp_name"][$k];
+                    $img["error"] = $_FILES["img_url"]["error"][$k];
+                    $img["size"] = $_FILES["img_url"]["size"][$k];
+                    if (!$path = $goodsService->qiniu($img)) {
+                        return ["status" => 11, "msg" => "商品详情图片上传失败"];
+                    } else {
+                        $photo=new Photo();
+                        $photo=$photo->save(["photo_img"=>$path,"goods_id"=>$goods_id]);
+                    }
+                }
+            }
+            if($goods&&$attrs&&$goodscate&&$brandcate&&$photo){
                 echo json_encode(["status"=>1,"msg"=>"ok"]);
             }else{
                 echo json_encode(["status"=>0,"msg"=>"添加失败"]);

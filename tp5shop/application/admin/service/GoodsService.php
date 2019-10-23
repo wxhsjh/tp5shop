@@ -42,6 +42,9 @@ class GoodsService{
         }
         return $path;
     }
+    public function photo(){
+
+    }
     public function attr($attr){
         if(empty($attr["attr_price"])){
             $attrs=[];

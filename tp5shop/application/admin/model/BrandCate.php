@@ -8,6 +8,6 @@
 namespace app\admin\model;
 use think\model\Pivot;
 
-class BrandsCate extends Pivot{
-
+class BrandCate extends Pivot{
+    protected $pk ="brand_cate_id";
 }
